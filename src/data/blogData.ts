@@ -1,3 +1,10 @@
+import imgEarningApps from "@/assets/blog-earning-apps.jpg";
+import imgFreelancing from "@/assets/blog-freelancing.jpg";
+import imgDataSaving from "@/assets/blog-data-saving.jpg";
+import imgCrypto from "@/assets/blog-crypto.jpg";
+import imgStudentJobs from "@/assets/blog-student-jobs.jpg";
+import imgBinanceP2p from "@/assets/blog-binance-p2p.jpg";
+
 export interface BlogPost {
   id: string;
   title: string;
