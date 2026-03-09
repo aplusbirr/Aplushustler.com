@@ -149,7 +149,7 @@ Bid on projects that match your skills.
 - Deliver quality work on time
     `,
     category: "online-jobs",
-    featuredImage: "",
+    featuredImage: imgFreelancing,
     author: "A Plus Hustler",
     date: "2026-02-25",
     readTime: "10 min read",
