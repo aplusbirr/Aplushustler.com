@@ -340,7 +340,7 @@ Binance P2P (Peer-to-Peer) allows you to buy and sell cryptocurrency directly wi
 Binance P2P is one of the safest ways to trade crypto in Ethiopia when used properly.
     `,
     category: "crypto-guides",
-    featuredImage: "",
+    featuredImage: imgBinanceP2p,
     author: "A Plus Hustler",
     date: "2026-02-05",
     readTime: "9 min read",
