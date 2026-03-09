@@ -246,7 +246,7 @@ Cryptocurrencies pegged to the US dollar.
 - Learn about P2P trading
     `,
     category: "crypto-guides",
-    featuredImage: "",
+    featuredImage: imgCrypto,
     author: "A Plus Hustler",
     date: "2026-02-15",
     readTime: "12 min read",
