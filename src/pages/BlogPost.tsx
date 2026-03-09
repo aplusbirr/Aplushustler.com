@@ -54,8 +54,12 @@ export default function BlogPost() {
       <div className="grid lg:grid-cols-3 gap-10">
         {/* Article */}
         <article className="lg:col-span-2">
-          <div className="aspect-video bg-muted rounded-xl flex items-center justify-center mb-6">
-            <span className="text-6xl">📝</span>
+          <div className="aspect-video bg-muted rounded-xl overflow-hidden mb-6">
+            {post.featuredImage ? (
+              <img src={post.featuredImage} alt={post.title} className="w-full h-full object-cover" />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center"><span className="text-6xl">📝</span></div>
+            )}
           </div>
 
           <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-4">

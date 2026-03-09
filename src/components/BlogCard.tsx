@@ -13,8 +13,12 @@ export default function BlogCard({ post }: { post: BlogPost }) {
   return (
     <Link to={`/blog/${post.slug}`} className="group block">
       <article className="bg-card rounded-xl border card-hover overflow-hidden">
-        <div className="aspect-video bg-muted flex items-center justify-center">
-          <span className="text-4xl">📝</span>
+        <div className="aspect-video bg-muted overflow-hidden">
+          {post.featuredImage ? (
+            <img src={post.featuredImage} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center"><span className="text-4xl">📝</span></div>
+          )}
         </div>
         <div className="p-5">
           <div className="flex items-center gap-2 mb-3">
