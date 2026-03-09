@@ -196,7 +196,7 @@ Use apps that compress images before sending.
 15. Consider Ethio Telecom's special packages
     `,
     category: "internet-tips",
-    featuredImage: "",
+    featuredImage: imgDataSaving,
     author: "A Plus Hustler",
     date: "2026-02-20",
     readTime: "6 min read",
