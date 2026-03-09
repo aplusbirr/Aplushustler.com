@@ -302,7 +302,7 @@ Edit videos for YouTubers and businesses.
 - Build a portfolio of your work
     `,
     category: "online-jobs",
-    featuredImage: "",
+    featuredImage: imgStudentJobs,
     author: "A Plus Hustler",
     date: "2026-02-10",
     readTime: "7 min read",
