@@ -1,3 +1,10 @@
+import imgEarningApps from "@/assets/blog-earning-apps.jpg";
+import imgFreelancing from "@/assets/blog-freelancing.jpg";
+import imgDataSaving from "@/assets/blog-data-saving.jpg";
+import imgCrypto from "@/assets/blog-crypto.jpg";
+import imgStudentJobs from "@/assets/blog-student-jobs.jpg";
+import imgBinanceP2p from "@/assets/blog-binance-p2p.jpg";
+
 export interface BlogPost {
   id: string;
   title: string;
@@ -92,7 +99,7 @@ Most apps pay through:
 Starting to earn online takes patience, but with the right apps and consistent effort, you can build a reliable side income from Ethiopia.
     `,
     category: "earning-apps",
-    featuredImage: "",
+    featuredImage: imgEarningApps,
     author: "A Plus Hustler",
     date: "2026-03-01",
     readTime: "8 min read",
@@ -142,7 +149,7 @@ Bid on projects that match your skills.
 - Deliver quality work on time
     `,
     category: "online-jobs",
-    featuredImage: "",
+    featuredImage: imgFreelancing,
     author: "A Plus Hustler",
     date: "2026-02-25",
     readTime: "10 min read",
@@ -189,7 +196,7 @@ Use apps that compress images before sending.
 15. Consider Ethio Telecom's special packages
     `,
     category: "internet-tips",
-    featuredImage: "",
+    featuredImage: imgDataSaving,
     author: "A Plus Hustler",
     date: "2026-02-20",
     readTime: "6 min read",
@@ -239,7 +246,7 @@ Cryptocurrencies pegged to the US dollar.
 - Learn about P2P trading
     `,
     category: "crypto-guides",
-    featuredImage: "",
+    featuredImage: imgCrypto,
     author: "A Plus Hustler",
     date: "2026-02-15",
     readTime: "12 min read",
@@ -295,7 +302,7 @@ Edit videos for YouTubers and businesses.
 - Build a portfolio of your work
     `,
     category: "online-jobs",
-    featuredImage: "",
+    featuredImage: imgStudentJobs,
     author: "A Plus Hustler",
     date: "2026-02-10",
     readTime: "7 min read",
@@ -333,7 +340,7 @@ Binance P2P (Peer-to-Peer) allows you to buy and sell cryptocurrency directly wi
 Binance P2P is one of the safest ways to trade crypto in Ethiopia when used properly.
     `,
     category: "crypto-guides",
-    featuredImage: "",
+    featuredImage: imgBinanceP2p,
     author: "A Plus Hustler",
     date: "2026-02-05",
     readTime: "9 min read",
