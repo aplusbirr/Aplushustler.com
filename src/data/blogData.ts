@@ -99,7 +99,7 @@ Most apps pay through:
 Starting to earn online takes patience, but with the right apps and consistent effort, you can build a reliable side income from Ethiopia.
     `,
     category: "earning-apps",
-    featuredImage: "",
+    featuredImage: imgEarningApps,
     author: "A Plus Hustler",
     date: "2026-03-01",
     readTime: "8 min read",
