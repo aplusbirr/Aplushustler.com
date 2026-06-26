@@ -3,7 +3,8 @@ import { TrendingUp, ArrowRight, Smartphone, Briefcase, Wifi, Bitcoin } from "lu
 import BlogCard from "@/components/BlogCard";
 import AppCard from "@/components/AppCard";
 import AdPlaceholder from "@/components/AdPlaceholder";
-import { blogPosts, earningApps } from "@/data/blogData";
+import { earningApps } from "@/data/blogData";
+import { usePosts } from "@/hooks/usePosts";
 
 const categories = [
   { name: "Earning Apps", path: "/earning-apps", icon: Smartphone, desc: "Top apps to earn money" },
@@ -13,13 +14,12 @@ const categories = [
 ];
 
 export default function Home() {
-  const featuredPosts = blogPosts.filter(p => p.featured);
-  const latestPosts = blogPosts.slice(0, 4);
+  const { data: featuredPosts = [] } = usePosts({ featuredOnly: true });
+  const { data: latestPosts = [] } = usePosts({ limit: 3 });
   const topApps = earningApps.slice(0, 3);
 
   return (
     <>
-      {/* Hero */}
       <section className="hero-gradient text-surface-dark-foreground py-16 md:py-24">
         <div className="container text-center">
           <div className="inline-flex items-center gap-2 bg-primary/20 text-primary-foreground px-4 py-1.5 rounded-full text-sm font-medium mb-6">
@@ -32,23 +32,12 @@ export default function Home() {
             Step-by-step guides on earning apps, online jobs, crypto, and internet tips designed for people in Ethiopia.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <Link
-              to="/blog"
-              className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:opacity-90 transition-opacity"
-            >
-              Start Learning
-            </Link>
-            <Link
-              to="/earning-apps"
-              className="px-6 py-3 bg-surface-dark-foreground/10 border border-surface-dark-foreground/20 rounded-lg font-medium hover:bg-surface-dark-foreground/20 transition-colors"
-            >
-              Browse Apps
-            </Link>
+            <Link to="/blog" className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:opacity-90 transition-opacity">Start Learning</Link>
+            <Link to="/earning-apps" className="px-6 py-3 bg-surface-dark-foreground/10 border border-surface-dark-foreground/20 rounded-lg font-medium hover:bg-surface-dark-foreground/20 transition-colors">Browse Apps</Link>
           </div>
         </div>
       </section>
 
-      {/* Categories */}
       <section className="container py-12">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {categories.map((cat) => (
@@ -63,63 +52,44 @@ export default function Home() {
 
       <AdPlaceholder label="Horizontal Ad Banner" />
 
-      {/* Latest Posts */}
       <section className="container py-12">
         <div className="flex items-center justify-between mb-6">
           <h2 className="font-display text-2xl font-bold">Latest Articles</h2>
-          <Link to="/blog" className="text-primary text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all">
-            View all <ArrowRight className="h-4 w-4" />
-          </Link>
+          <Link to="/blog" className="text-primary text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all">View all <ArrowRight className="h-4 w-4" /></Link>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {latestPosts.slice(0, 3).map((post) => (
-            <BlogCard key={post.id} post={post} />
-          ))}
+          {latestPosts.map((post) => <BlogCard key={post.id} post={post} />)}
         </div>
       </section>
 
-      {/* Popular Apps */}
       <section className="bg-muted py-12">
         <div className="container">
           <div className="flex items-center justify-between mb-6">
             <h2 className="font-display text-2xl font-bold">Popular Earning Apps</h2>
-            <Link to="/earning-apps" className="text-primary text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all">
-              See all <ArrowRight className="h-4 w-4" />
-            </Link>
+            <Link to="/earning-apps" className="text-primary text-sm font-medium flex items-center gap-1 hover:gap-2 transition-all">See all <ArrowRight className="h-4 w-4" /></Link>
           </div>
           <div className="grid md:grid-cols-3 gap-4">
-            {topApps.map((app) => (
-              <AppCard key={app.id} app={app} />
-            ))}
+            {topApps.map((app) => <AppCard key={app.id} app={app} />)}
           </div>
         </div>
       </section>
 
       <AdPlaceholder label="In-Content Ad" />
 
-      {/* Featured Guides */}
-      <section className="container py-12">
-        <h2 className="font-display text-2xl font-bold mb-6">Featured Guides</h2>
-        <div className="grid md:grid-cols-2 gap-6">
-          {featuredPosts.map((post) => (
-            <BlogCard key={post.id} post={post} />
-          ))}
-        </div>
-      </section>
+      {featuredPosts.length > 0 && (
+        <section className="container py-12">
+          <h2 className="font-display text-2xl font-bold mb-6">Featured Guides</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            {featuredPosts.map((post) => <BlogCard key={post.id} post={post} />)}
+          </div>
+        </section>
+      )}
 
-      {/* CTA */}
       <section className="hero-gradient text-surface-dark-foreground py-16">
         <div className="container text-center">
           <h2 className="font-display text-3xl font-bold mb-4">Ready to Start Earning?</h2>
-          <p className="opacity-70 mb-6 max-w-lg mx-auto">
-            Join thousands of Ethiopians who are already making money online with our free guides.
-          </p>
-          <Link
-            to="/blog"
-            className="inline-block px-8 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:opacity-90 transition-opacity"
-          >
-            Explore All Guides
-          </Link>
+          <p className="opacity-70 mb-6 max-w-lg mx-auto">Join thousands of Ethiopians who are already making money online with our free guides.</p>
+          <Link to="/blog" className="inline-block px-8 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:opacity-90 transition-opacity">Explore All Guides</Link>
         </div>
       </section>
     </>
