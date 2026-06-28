@@ -232,6 +232,26 @@ function PostEditor({ id }: { id?: string }) {
   });
   const [loaded, setLoaded] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { toast.error("Image must be under 5MB"); return; }
+    setUploading(true);
+    const ext = file.name.split(".").pop() || "jpg";
+    const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+    const { error: upErr } = await supabase.storage.from("post-images").upload(path, file, {
+      cacheControl: "31536000", contentType: file.type,
+    });
+    if (upErr) { setUploading(false); toast.error(upErr.message); return; }
+    const { data: signed, error: signErr } = await supabase.storage
+      .from("post-images").createSignedUrl(path, 60 * 60 * 24 * 365 * 100);
+    setUploading(false);
+    if (signErr || !signed) { toast.error(signErr?.message || "Could not get URL"); return; }
+    setForm((f) => ({ ...f, featured_image: signed.signedUrl }));
+    toast.success("Image uploaded");
+  };
 
   if (isEdit && existing && !loaded) {
     setForm({
