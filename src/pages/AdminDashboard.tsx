@@ -318,10 +318,25 @@ function PostEditor({ id }: { id?: string }) {
           </div>
         </div>
         <div>
-          <label className="text-sm font-medium mb-1 block">Featured Image URL</label>
-          <input value={form.featured_image} onChange={(e) => setForm({ ...form, featured_image: e.target.value })}
-            placeholder="https://..."
-            className="w-full px-4 py-2.5 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/20" />
+          <label className="text-sm font-medium mb-1 block">Featured Image</label>
+          <div className="flex flex-col sm:flex-row gap-3 sm:items-start">
+            {form.featured_image && (
+              <img src={form.featured_image} alt="Preview" className="w-full sm:w-40 h-28 object-cover rounded-lg border" />
+            )}
+            <div className="flex-1 space-y-2">
+              <label className="inline-flex items-center gap-2 px-4 py-2 bg-muted hover:bg-muted/80 rounded-lg text-sm font-medium cursor-pointer w-fit">
+                <input type="file" accept="image/*" onChange={handleImageUpload} disabled={uploading} className="hidden" />
+                {uploading ? "Uploading..." : form.featured_image ? "Replace image" : "Upload image"}
+              </label>
+              <input value={form.featured_image} onChange={(e) => setForm({ ...form, featured_image: e.target.value })}
+                placeholder="…or paste an image URL"
+                className="w-full px-4 py-2.5 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/20" />
+              {form.featured_image && (
+                <button type="button" onClick={() => setForm({ ...form, featured_image: "" })}
+                  className="text-xs text-muted-foreground hover:text-destructive">Remove image</button>
+              )}
+            </div>
+          </div>
         </div>
         <div>
           <label className="text-sm font-medium mb-1 block">Excerpt</label>
