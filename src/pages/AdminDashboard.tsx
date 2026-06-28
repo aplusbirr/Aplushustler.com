@@ -232,6 +232,26 @@ function PostEditor({ id }: { id?: string }) {
   });
   const [loaded, setLoaded] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { toast.error("Image must be under 5MB"); return; }
+    setUploading(true);
+    const ext = file.name.split(".").pop() || "jpg";
+    const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+    const { error: upErr } = await supabase.storage.from("post-images").upload(path, file, {
+      cacheControl: "31536000", contentType: file.type,
+    });
+    if (upErr) { setUploading(false); toast.error(upErr.message); return; }
+    const { data: signed, error: signErr } = await supabase.storage
+      .from("post-images").createSignedUrl(path, 60 * 60 * 24 * 365 * 100);
+    setUploading(false);
+    if (signErr || !signed) { toast.error(signErr?.message || "Could not get URL"); return; }
+    setForm((f) => ({ ...f, featured_image: signed.signedUrl }));
+    toast.success("Image uploaded");
+  };
 
   if (isEdit && existing && !loaded) {
     setForm({
@@ -298,10 +318,25 @@ function PostEditor({ id }: { id?: string }) {
           </div>
         </div>
         <div>
-          <label className="text-sm font-medium mb-1 block">Featured Image URL</label>
-          <input value={form.featured_image} onChange={(e) => setForm({ ...form, featured_image: e.target.value })}
-            placeholder="https://..."
-            className="w-full px-4 py-2.5 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/20" />
+          <label className="text-sm font-medium mb-1 block">Featured Image</label>
+          <div className="flex flex-col sm:flex-row gap-3 sm:items-start">
+            {form.featured_image && (
+              <img src={form.featured_image} alt="Preview" className="w-full sm:w-40 h-28 object-cover rounded-lg border" />
+            )}
+            <div className="flex-1 space-y-2">
+              <label className="inline-flex items-center gap-2 px-4 py-2 bg-muted hover:bg-muted/80 rounded-lg text-sm font-medium cursor-pointer w-fit">
+                <input type="file" accept="image/*" onChange={handleImageUpload} disabled={uploading} className="hidden" />
+                {uploading ? "Uploading..." : form.featured_image ? "Replace image" : "Upload image"}
+              </label>
+              <input value={form.featured_image} onChange={(e) => setForm({ ...form, featured_image: e.target.value })}
+                placeholder="…or paste an image URL"
+                className="w-full px-4 py-2.5 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/20" />
+              {form.featured_image && (
+                <button type="button" onClick={() => setForm({ ...form, featured_image: "" })}
+                  className="text-xs text-muted-foreground hover:text-destructive">Remove image</button>
+              )}
+            </div>
+          </div>
         </div>
         <div>
           <label className="text-sm font-medium mb-1 block">Excerpt</label>
